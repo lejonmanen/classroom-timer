@@ -34,7 +34,7 @@ x remove widgets
 + style change when reaching 0
 x add note
 x edit note widget
-+ edit countdown widget
+x edit countdown widget
 + cooler clock font
 */
 
@@ -77,6 +77,10 @@ function App() {
 	const saveNoteChange = (id, text) => {
 		setWidgets(ws => ws.map(w => w.id !== id ? w : { ...w, text: text } ))
 	}
+	const saveCountdownChange = (id, title, time) => {
+		console.log('saving cd ', title, time);
+		setWidgets(ws => ws.map(w => w.id !== id ? w : { ...w, title, timeLeft: time }))
+	}
 
 	function selectWidget(w) {
 		if( w.type === 'countdown' ) {
@@ -84,7 +88,8 @@ function App() {
 				<Countdown key={w.id}
 					minutesTotal={w.timeLeft}
 					title={w.title}
-					onDelete={() => doDeleteWidget(w.id)} />
+					onDelete={() => doDeleteWidget(w.id)}
+					onEdit={(title, time) => saveCountdownChange(w.id, title, time)} />
 			)
 		} else if( w.type === 'note' ) {
 			return (
