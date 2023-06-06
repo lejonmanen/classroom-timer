@@ -28,15 +28,6 @@ const Column = styled.div`
 // Note: { type, text }
 const Type = { COUNTDOWN: 'countdown', NOTE: 'note' }
 
-/*
-TODO
-x remove widgets
-+ style change when reaching 0
-x add note
-x edit note widget
-x edit countdown widget
-+ cooler clock font
-*/
 
 function calculateId(widgets) {
 	return widgets.reduce((acc, cur) => Math.max(acc, cur.id), 0) + 1
@@ -47,7 +38,8 @@ function App() {
 	// const [isAddingNote, setIsAddingNote] = useState(false)
 	const [widgets, setWidgets] = useState([
 		{ id: 1, type: Type.COUNTDOWN, timeLeft: 5, title: 'Rast'  },
-		{ id: 2, type: Type.COUNTDOWN, timeLeft: 1, title: 'Look out'  }
+		{ id: 2, type: Type.COUNTDOWN, timeLeft: 1, title: 'Look out'  },
+		{ id: 3, type: Type.NOTE, text: 'below!' }
 	])
 
 	const doAddCountdown = ({title, minutes}) => {

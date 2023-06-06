@@ -82,11 +82,24 @@ const Countdown = ({ minutesTotal, title, onDelete, onEdit }) => {
 	}
 
 	// console.log(theme.palette.primary);
-	// const paused = <PlayArrowIcon />
-
+	const timeStyle = {
+		fontFamily: "'Chivo Mono', 'Orbitron', sans-serif",
+		fontSize: '200%',
+		lineHeight: 1.3
+	}
+	const widgetStyle = {
+		position: 'relative',
+		textAlign: 'center',
+		border: 1, borderColor: 'primary.main', borderRadius: 1,
+		padding: 1, margin: 1,
+		// backgroundColor
+	}
+	if( interval.current?.timeLeft <= 0 ) {
+		widgetStyle.backgroundColor = theme.palette.error.light
+	}
 
 	return (
-		<Stack sx={{ position: 'relative', textAlign: 'center', border: 1, borderColor: 'primary.main', borderRadius: 1, padding: 1, margin: 1 }}>
+		<Stack sx={widgetStyle}>
 
 			{ !isEditing ? (
 				<Typography variant="subtitle1" sx={{ lineHeight: 1 }}>
@@ -103,7 +116,7 @@ const Countdown = ({ minutesTotal, title, onDelete, onEdit }) => {
 			)}
 
 			{!isEditing ? (
-				<Typography sx={{ fontFamily: 'Roboto Mono', fontSize: '200%', lineHeight: 1.3 }}> {display} </Typography>
+				<Typography sx={timeStyle}> {display} </Typography>
 			) : (
 				<TextField
 					label="Minutes"
