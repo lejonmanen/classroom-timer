@@ -32,8 +32,8 @@ const Type = { COUNTDOWN: 'countdown', NOTE: 'note' }
 TODO
 x remove widgets
 + style change when reaching 0
-+ add note
-+ edit note widget
+x add note
+x edit note widget
 + edit countdown widget
 + cooler clock font
 */
@@ -74,6 +74,10 @@ function App() {
 		setIsAddingTimer(true)
 	}
 
+	const saveNoteChange = (id, text) => {
+		setWidgets(ws => ws.map(w => w.id !== id ? w : { ...w, text: text } ))
+	}
+
 	function selectWidget(w) {
 		if( w.type === 'countdown' ) {
 			return (
@@ -86,7 +90,8 @@ function App() {
 			return (
 				<Note key={w.id}
 					text={w.text}
-					onDelete={() => doDeleteWidget(w.id)} />
+					onDelete={() => doDeleteWidget(w.id)}
+					onEdit={text => saveNoteChange(w.id, text)} />
 			)
 		} else {
 			return null
