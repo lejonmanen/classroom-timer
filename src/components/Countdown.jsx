@@ -2,28 +2,20 @@
 import { useTheme } from '@mui/material/styles'; 
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
-import Fab from '@mui/material/Fab'
-import Container from '@mui/material/Container'
+// import Fab from '@mui/material/Fab'
+// import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import styled from '@emotion/styled'
+// import styled from '@emotion/styled'
 import { useState, useRef, useEffect } from 'react'
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 
-function timeSplit(ms) {
-	let positive = ms >= 0
-	if( !positive ) { ms = -ms }
+import WidgetActions from './WidgetActions.jsx';
+import { timeSplit } from '../utils.js';
 
-	let seconds = Math.round(ms / 1000)
-	let s = seconds % 60
-	if( s < 10 ) s = '0' + s
-	let min = (seconds - s) / 60
-	return [positive, min, s]
-}
-const Countdown = ({ minutesTotal, title }) => {
+
+const Countdown = ({ minutesTotal, title, onDelete }) => {
 	// const [msLeft, setMsLeft] = useState(minutes * 60 * 1000)
 	const [isPaused, setIsPaused] = useState(true)
 	const [display, setDisplay] = useState('--:--')
@@ -38,6 +30,8 @@ const Countdown = ({ minutesTotal, title }) => {
 		}
 		return () => { clearInterval(interval.current.id) }
 	}, [])
+
+	const handleEdit = () => {}
 
 	const resumePause = () => {
 		if( isPaused ) {
@@ -68,24 +62,15 @@ const Countdown = ({ minutesTotal, title }) => {
 	}
 
 	// <Stack direction="row">
-	console.log(theme.palette.primary);
+	// console.log(theme.palette.primary);
 	const paused = <PlayArrowIcon />
 
-	const fabHover = {
-		"&:hover": {
-			color: theme.palette.primary.main,
-			transition: '0.4s all ease-out'
-		}
-	}
 
 	return (
 		<Stack sx={{ position: 'relative', textAlign: 'center', border: 1, borderColor: 'primary.main', borderRadius: 1, padding: 1, margin: 1 }}>
 			<Typography variant="subtitle1" sx={{ lineHeight: 1 }}>
 				{title}
-				<Stack direction="row" spacing={1} sx={{ position: 'absolute', right: '8px', top: '8px' }}>
-					<Fab size="small" sx={fabHover}> <EditIcon /> </Fab>
-					<Fab size="small" sx={fabHover}> <DeleteIcon /> </Fab>
-				</Stack>
+				<WidgetActions onEdit={handleEdit} onDelete={onDelete} />
 			</Typography>
 			<Typography sx={{ fontFamily: 'Roboto Mono', fontSize: '200%', lineHeight: 1.3 }}> {display} </Typography>
 			<Stack direction="row" spacing={1} justifyContent="center">
